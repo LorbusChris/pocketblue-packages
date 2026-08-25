@@ -1,0 +1,406 @@
+Squashed linux-surface/libwacom branch ipts: BUS_VIRTUAL and Intel ME bus
+matching in the library (parser, kernel-device mapping, match printer,
+debug tool) plus the Microsoft Surface tablet definitions and the test
+updates that keep %check green. Stock libwacom rejects these DeviceMatch
+entries and never maps BUS_VIRTUAL devices, so data files alone cannot
+work -- see the note in bluespin's build_files/build.sh.
+
+Generated from linux-surface/libwacom @ ipts (87f8269e, 2025-12-30):
+  git diff libwacom-2.17.0-9-gb33bb7b4..ipts
+Applies cleanly onto the libwacom-2.19.0 release; regenerate from the
+ipts branch when it moves.
+
+diff --git a/data/surface-book.tablet b/data/surface-book.tablet
+new file mode 100644
+index 00000000..6daf5b6f
+--- /dev/null
++++ b/data/surface-book.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Book (1)
++
++[Device]
++Name=Microsoft Surface Book
++Class=PenDisplay
++DeviceMatch=virt|1b96|005e;mei|1b96|005e
++Width=11
++Height=7
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=true
++Touch=true
++Buttons=0
+diff --git a/data/surface-book2-13.tablet b/data/surface-book2-13.tablet
+new file mode 100644
+index 00000000..7cf7ba35
+--- /dev/null
++++ b/data/surface-book2-13.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Book 2 13.5-inch model
++
++[Device]
++Name=Microsoft Surface Book 2 (13.5")
++Class=PenDisplay
++DeviceMatch=virt|045e|0021;mei|045e|0021
++Width=11
++Height=7
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=true
++Touch=true
++Buttons=0
+diff --git a/data/surface-book2-15.tablet b/data/surface-book2-15.tablet
+new file mode 100644
+index 00000000..3266fca7
+--- /dev/null
++++ b/data/surface-book2-15.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Book 2 15-inch model
++
++[Device]
++Name=Microsoft Surface Book 2 (15")
++Class=PenDisplay
++DeviceMatch=virt|045e|0020;mei|045e|0020
++Width=12
++Height=8
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=true
++Touch=true
++Buttons=0
+diff --git a/data/surface-book3-13.tablet b/data/surface-book3-13.tablet
+new file mode 100644
+index 00000000..e363f330
+--- /dev/null
++++ b/data/surface-book3-13.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Book 3 13.5-inch model
++
++[Device]
++Name=Microsoft Surface Book 3 (13.5")
++Class=PenDisplay
++DeviceMatch=virt|045e|09b2;mei|045e|09b2
++Width=11
++Height=7
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=false
++Touch=true
++Buttons=0
+diff --git a/data/surface-book3-15.tablet b/data/surface-book3-15.tablet
+new file mode 100644
+index 00000000..4954b615
+--- /dev/null
++++ b/data/surface-book3-15.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Book 3 15-inch model
++
++[Device]
++Name=Microsoft Surface Book 3 (15")
++Class=PenDisplay
++DeviceMatch=virt|045e|09b1;mei|045e|09b1
++Width=12
++Height=8
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=false
++Touch=true
++Buttons=0
+diff --git a/data/surface-laptop-studio.tablet b/data/surface-laptop-studio.tablet
+new file mode 100644
+index 00000000..60774030
+--- /dev/null
++++ b/data/surface-laptop-studio.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Laptop Studio
++
++[Device]
++Name=Microsoft Surface Laptop Studio
++Class=PenDisplay
++DeviceMatch=virt|045e|0c1b
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=false
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro3.tablet b/data/surface-pro3.tablet
+new file mode 100644
+index 00000000..2f535410
+--- /dev/null
++++ b/data/surface-pro3.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 3
++
++[Device]
++Name=Microsoft Surface Pro 3
++Class=PenDisplay
++DeviceMatch=i2c|1b96|1b05
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=true
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro4.tablet b/data/surface-pro4.tablet
+new file mode 100644
+index 00000000..f77f3a2b
+--- /dev/null
++++ b/data/surface-pro4.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 4
++
++[Device]
++Name=Microsoft Surface Pro 4
++Class=PenDisplay
++DeviceMatch=virt|1b96|006a;virt|1b96|0021;mei|1b96|006a;mei|1b96|0021
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=true
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro5.tablet b/data/surface-pro5.tablet
+new file mode 100644
+index 00000000..410a0d3f
+--- /dev/null
++++ b/data/surface-pro5.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 5 (2017)
++
++[Device]
++Name=Microsoft Surface Pro 5
++Class=PenDisplay
++DeviceMatch=virt|1b96|001f;mei|1b96|001f
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=true
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro6.tablet b/data/surface-pro6.tablet
+new file mode 100644
+index 00000000..eb89df02
+--- /dev/null
++++ b/data/surface-pro6.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 6
++
++[Device]
++Name=Microsoft Surface Pro 6
++Class=PenDisplay
++DeviceMatch=virt|045e|001f;mei|045e|001f
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=true
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro7-plus.tablet b/data/surface-pro7-plus.tablet
+new file mode 100644
+index 00000000..5c4e540f
+--- /dev/null
++++ b/data/surface-pro7-plus.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 7+
++
++[Device]
++Name=Microsoft Surface Pro 7+
++Class=PenDisplay
++DeviceMatch=virt|045e|0c1a
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=false
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro7.tablet b/data/surface-pro7.tablet
+new file mode 100644
+index 00000000..f9601079
+--- /dev/null
++++ b/data/surface-pro7.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 7
++
++[Device]
++Name=Microsoft Surface Pro 7
++Class=PenDisplay
++DeviceMatch=virt|045e|099f;mei|045e|099f
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=false
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro8.tablet b/data/surface-pro8.tablet
+new file mode 100644
+index 00000000..dcfef119
+--- /dev/null
++++ b/data/surface-pro8.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 8
++
++[Device]
++Name=Microsoft Surface Pro 8
++Class=PenDisplay
++DeviceMatch=virt|045e|0c37
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=false
++Touch=true
++Buttons=0
+diff --git a/data/surface-pro9.tablet b/data/surface-pro9.tablet
+new file mode 100644
+index 00000000..ee2b3eea
+--- /dev/null
++++ b/data/surface-pro9.tablet
+@@ -0,0 +1,14 @@
++# This is for the Microsoft Surface Pro 9
++
++[Device]
++Name=Microsoft Surface Pro 9
++Class=PenDisplay
++DeviceMatch=virt|045e|0c52
++Width=10
++Height=6
++IntegratedIn=Display;System;
++
++[Features]
++Stylus=false
++Touch=true
++Buttons=0
+diff --git a/libwacom/libwacom-database.c b/libwacom/libwacom-database.c
+index eb84df4f..44f08742 100644
+--- a/libwacom/libwacom-database.c
++++ b/libwacom/libwacom-database.c
+@@ -175,6 +175,10 @@ bus_from_str(const char *str)
+ 		return WBUSTYPE_BLUETOOTH;
+ 	if (g_str_equal(str, "i2c"))
+ 		return WBUSTYPE_I2C;
++	if (g_str_equal(str, "virt"))
++		return WBUSTYPE_VIRTUAL;
++	if (strcmp (str, "mei") == 0)
++		return WBUSTYPE_MEI;
+ 	return WBUSTYPE_UNKNOWN;
+ }
+ 
+@@ -193,6 +197,10 @@ bus_to_str(WacomBusType bus)
+ 		return "bluetooth";
+ 	case WBUSTYPE_I2C:
+ 		return "i2c";
++	case WBUSTYPE_VIRTUAL:
++		return "virt";
++	case WBUSTYPE_MEI:
++		return "mei";
+ 	}
+ 	g_assert_not_reached();
+ }
+diff --git a/libwacom/libwacom.c b/libwacom/libwacom.c
+index ab8b4e47..497b0608 100644
+--- a/libwacom/libwacom.c
++++ b/libwacom/libwacom.c
+@@ -156,6 +156,14 @@ get_bus_vid_pid(GUdevDevice *device,
+ 		*bus = WBUSTYPE_I2C;
+ 		retval = TRUE;
+ 		break;
++	case 6:
++		*bus = WBUSTYPE_VIRTUAL;
++		retval = TRUE;
++		break;
++	case 68:
++		*bus = WBUSTYPE_MEI;
++		retval = TRUE;
++		break;
+ 	}
+ 
+ out:
+@@ -1100,6 +1108,12 @@ print_match(int fd,
+ 	case WBUSTYPE_I2C:
+ 		bus_name = "i2c";
+ 		break;
++	case WBUSTYPE_VIRTUAL:
++		bus_name = "virt";
++		break;
++	case WBUSTYPE_MEI:
++		bus_name = "mei";
++		break;
+ 	case WBUSTYPE_UNKNOWN:
+ 		bus_name = "unknown";
+ 		break;
+diff --git a/libwacom/libwacom.h b/libwacom/libwacom.h
+index 9d9fe650..34cfbff0 100644
+--- a/libwacom/libwacom.h
++++ b/libwacom/libwacom.h
+@@ -153,6 +153,8 @@ typedef enum {
+ 	WBUSTYPE_SERIAL,    /**< Serial tablet */
+ 	WBUSTYPE_BLUETOOTH, /**< Bluetooth tablet */
+ 	WBUSTYPE_I2C,       /**< I2C tablet */
++	WBUSTYPE_VIRTUAL,   /**< Virtual (uinput) tablet */
++	WBUSTYPE_MEI,       /**< MEI */
+ } WacomBusType;
+ 
+ /**
+diff --git a/test/test-tablet-validity.c b/test/test-tablet-validity.c
+index bf4609b7..50b931c2 100644
+--- a/test/test-tablet-validity.c
++++ b/test/test-tablet-validity.c
+@@ -180,6 +180,8 @@ assert_vidpid(WacomBusType bus,
+ 		break;
+ 	case WBUSTYPE_BLUETOOTH:
+ 	case WBUSTYPE_I2C:
++	case WBUSTYPE_VIRTUAL:
++	case WBUSTYPE_MEI:
+ 		g_assert_cmpint(vid, >, 0);
+ 		g_assert_cmpint(pid, >, 0);
+ 		break;
+diff --git a/test/test_data_files.py b/test/test_data_files.py
+index 4cff174f..bd7d798f 100755
+--- a/test/test_data_files.py
++++ b/test/test_data_files.py
+@@ -47,6 +47,8 @@ def test_device_match(tabletfile):
+             "bluetooth",
+             "i2c",
+             "serial",
++            "virt",
++            "mei",
+         ], f"{tabletfile}: unknown bus type"
+         assert re.match("[0-9a-f]{4}", vid), (
+             f"{tabletfile}: {vid} must be lowercase hex"
+diff --git a/tools/debug-device.c b/tools/debug-device.c
+index 4f9762e9..91553316 100644
+--- a/tools/debug-device.c
++++ b/tools/debug-device.c
+@@ -191,6 +191,12 @@ handle_device(WacomDeviceDatabase *db,
+ 		case WBUSTYPE_I2C:
+ 			busstr = "I2C";
+ 			break;
++		case WBUSTYPE_VIRTUAL:
++			busstr = "VIRTUAL";
++			break;
++		case WBUSTYPE_MEI:
++			busstr = "MEI";
++			break;
+ 		}
+ 		func(libwacom_get_bustype, "%s", busstr);
+ 	}
