@@ -43,6 +43,17 @@
       datasourceTemplate: 'git-refs',
     },
     {
+      // Tag-pinned build flows (iptsd): a ref variable following upstream's
+      // release tags, used verbatim by the build.
+      customType: 'regex',
+      managerFilePatterns: [
+        '/Makefile$/',
+      ],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\n[A-Z0-9_]+_REF=(?<currentValue>\\S+)',
+      ],
+    },
+    {
       // Fedora's own package version, via mdapi: used by builds that pull
       // Fedora's spec at SRPM time (surface/libwacom) -- the bump is only
       // a rebuild trigger.
