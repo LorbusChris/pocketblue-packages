@@ -1,4 +1,5 @@
 Name:       hexagonrpc
+# renovate: datasource=github-tags depName=linux-msm/hexagonrpc
 Version:    0.5.0
 Release:    1
 Summary:    FastRPC ioctl wrapper and a reverse tunnel

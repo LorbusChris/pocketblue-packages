@@ -1,0 +1,68 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+  ],
+  // Specs fetch their sources at SRPM time (spectool / packit), so a
+  // version bump in git is the complete update; the COPR webhook then
+  // rebuilds exactly the package whose directory the merge touched.
+  customManagers: [
+    {
+      // Tagged upstreams: the spec's Version line, tags prefixed with v.
+      customType: 'regex',
+      managerFilePatterns: [
+        '/\\.spec$/',
+      ],
+      matchStrings: [
+        '# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)\\nVersion:\\s*(?<currentValue>\\S+)',
+      ],
+      extractVersionTemplate: '^v(?<version>.*)$',
+    },
+    {
+      // Commit-snapshot upstreams: the %global commit pin follows a branch.
+      customType: 'regex',
+      managerFilePatterns: [
+        '/\\.spec$/',
+      ],
+      matchStrings: [
+        '# renovate: datasource=git-refs depName=(?<depName>\\S+) branch=(?<currentValue>\\S+)\\n%global commit (?<currentDigest>[a-f0-9]{40})',
+      ],
+      datasourceTemplate: 'git-refs',
+    },
+    {
+      // Pinned build flows (rust-blob-wrangler's packit ref, the libwacom
+      // patch source): a commit variable following a branch.
+      customType: 'regex',
+      managerFilePatterns: [
+        '/Makefile$/',
+        '/watch\\.env$/',
+      ],
+      matchStrings: [
+        '# renovate: datasource=git-refs depName=(?<depName>\\S+) branch=(?<currentValue>\\S+)\\n[A-Z0-9_]+_COMMIT=(?<currentDigest>[a-f0-9]{40})',
+      ],
+      datasourceTemplate: 'git-refs',
+    },
+    {
+      // Fedora's own package version, via mdapi: used by builds that pull
+      // Fedora's spec at SRPM time (surface/libwacom) -- the bump is only
+      // a rebuild trigger.
+      customType: 'regex',
+      managerFilePatterns: [
+        '/watch\\.env$/',
+      ],
+      matchStrings: [
+        '# renovate: datasource=custom\\.fedora-mdapi depName=(?<depName>\\S+)\\n[A-Z0-9_]+_VERSION=(?<currentValue>\\S+)',
+      ],
+      datasourceTemplate: 'custom.fedora-mdapi',
+    },
+  ],
+  customDatasources: {
+    'fedora-mdapi': {
+      defaultRegistryUrlTemplate: 'https://mdapi.fedoraproject.org/rawhide/pkg/{{packageName}}',
+      format: 'json',
+      transformTemplates: [
+        '{"releases": [{"version": version}]}',
+      ],
+    },
+  },
+}

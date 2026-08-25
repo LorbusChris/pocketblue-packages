@@ -1,3 +1,4 @@
+# renovate: datasource=git-refs depName=https://gitlab.freedesktop.org/hadess/iio-sensor-proxy branch=master
 %global commit 0085ddf8ecb173a1c5fcf2344aa40e561125354f
 
 Name:           iio-sensor-proxy

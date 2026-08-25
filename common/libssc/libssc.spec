@@ -1,4 +1,5 @@
 Name:           libssc
+# renovate: datasource=git-tags depName=https://codeberg.org/DylanVanAssche/libssc
 Version:        0.4.4
 Release:        1
 Summary:        Library to expose Qualcomm Sensor Core sensors
