@@ -3,7 +3,7 @@
 
 Name:           iio-sensor-proxy
 Version:        3.9
-Release:        1
+Release:        %autorelease
 Summary:        IIO accelerometer sensor to input device proxy
 
 # tests/unittest_inspector.py is LGPL-2.1-or-later but it is not packaged
