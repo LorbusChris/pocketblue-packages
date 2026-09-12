@@ -7,7 +7,7 @@
 # through the path-filtered webhook.
 #
 # renovate: datasource=git-refs depName=https://github.com/pocketblue/blob-wrangler branch=pocketblue-fixes
-BLOB_WRANGLER_COMMIT=20de0d888e8aa23857193a7440797a0dbb348986
+BLOB_WRANGLER_COMMIT=798629543c85172a1a2b38d57342a8575ac7a490
 
 srpm:
 	dnf install -y packit cargo git rpm-build
