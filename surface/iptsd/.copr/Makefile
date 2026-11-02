@@ -9,7 +9,7 @@
 # could follow it.
 #
 # renovate: datasource=github-tags depName=linux-surface/iptsd
-IPTSD_REF=v3.1.0
+IPTSD_REF=v3.1.1
 
 srpm:
 	dnf install -y rpkg git
