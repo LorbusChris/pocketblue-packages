@@ -7,7 +7,7 @@
 # versions.
 #
 # renovate: datasource=git-refs depName=https://gitlab.freedesktop.org/hadess/iio-sensor-proxy branch=master
-IIO_COMMIT=0085ddf8ecb173a1c5fcf2344aa40e561125354f
+IIO_COMMIT=ca0d5b08bd647afc5f8ead3ce00a44018fbc633f
 
 srpm:
 	dnf install -y rpkg rpmdevtools curl
